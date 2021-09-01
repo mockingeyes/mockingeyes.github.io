@@ -1,0 +1,6 @@
+<html>
+<head>新的一页</head>
+<body>
+	<p>Hello,world!</p>
+</body>
+</html>
