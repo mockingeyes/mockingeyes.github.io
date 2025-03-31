@@ -228,4 +228,51 @@ document.getElementById('search-btn').addEventListener('click', function(e) {
     });
 });
 </script>
+<script>
+    (function(){
+        // 通用搜索处理函数
+        function handleSearch(event) {
+            event.preventDefault();
+            document.body.classList.add('upside-down');
+            replaceTextWithCockroach();
+        }
+    
+        // 绑定按钮点击事件
+        document.getElementById('search-btn').addEventListener('click', handleSearch);
+    
+        // 绑定输入框回车事件
+        document.getElementById('search-input').addEventListener('keydown', function(e) {
+            if(e.key === 'Enter') {
+                handleSearch(e);
+            }
+        });
+    
+        // 文字转换函数（优化版）
+        function replaceTextWithCockroach() {
+            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+            while(walker.nextNode()) {
+                const node = walker.currentNode;
+                if(node.parentElement.tagName !== 'SCRIPT' && node.textContent.trim()) {
+                    node.textContent = node.textContent.replace(/./g, '🪳');
+                }
+            }
+    
+            // 处理表单元素
+            document.querySelectorAll('input, textarea').forEach(el => {
+                el.value = '🪳'.repeat(el.value.length);
+                el.placeholder && (el.placeholder = '🪳'.repeat(10));
+            });
+        }
+    })();
+    </script>
+    
+    <style>
+        /* 添加反转动画 */
+        body {
+            transition: transform 1s;
+        }
+        .upside-down {
+            transform: rotate(180deg);
+        }
+    </style>
 </html>
